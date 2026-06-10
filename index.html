@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Gestoría Martínez — asesoría fiscal, laboral y contable para particulares, autónomos y empresas. Primera consulta gratuita." />
+  <title>Gestoría Martínez — Asesoría Fiscal, Laboral y Contable</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── RESET ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    img, picture, video, canvas, svg { display: block; max-width: 100%; }
+    input, button, textarea, select { font: inherit; }
+    p, h1, h2, h3, h4 { overflow-wrap: break-word; }
+    ul, ol { list-style: none; }
+
+    /* ─── TOKENS ─────────────────────────────────────────── */
+    :root {
+      /* palette — near-black + white, no color except ink contrast */
+      --dark:          oklch(0.10 0.016 262);
+      --dark-raised:   oklch(0.14 0.016 262);
+      --dark-border:   oklch(0.22 0.014 262);
+      --dark-subtle:   oklch(0.28 0.012 262);
+
+      --surface:       oklch(0.99 0.002 262);
+      --surface-alt:   oklch(0.95 0.004 262);
+      --border:        oklch(0.88 0.006 262);
+      --border-subtle: oklch(0.93 0.004 262);
+
+      --ink:           oklch(0.13 0.012 262);
+      --ink-2:         oklch(0.44 0.010 262);
+      --ink-3:         oklch(0.62 0.007 262);
+
+      --on-dark:       oklch(0.93 0.005 262);
+      --on-dark-2:     oklch(0.62 0.010 262);
+
+      /* type */
+      --f-display: 'Source Serif 4', Georgia, serif;
+      --f-body:    'Lato', system-ui, -apple-system, sans-serif;
+
+      /* layout */
+      --nav-h:     68px;
+      --max-w:     1160px;
+      --px:        clamp(1.25rem, 5vw, 3rem);
+      --section-y: clamp(5rem, 9vw, 9rem);
+
+      /* radii — sharp, precise */
+      --r: 2px;
+    }
+
+    /* ─── BASE ───────────────────────────────────────────── */
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: var(--nav-h);
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: var(--f-body);
+      font-size: 1rem;
+      line-height: 1.65;
+      color: var(--ink);
+      background: var(--surface);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* skip link */
+    .skip {
+      position: absolute;
+      top: -200%;
+      left: 1rem;
+      padding: .625rem 1.5rem;
+      background: var(--ink);
+      color: var(--surface);
+      font-weight: 700;
+      font-size: .875rem;
+      text-decoration: none;
+      border-radius: var(--r);
+      z-index: 9999;
+    }
+    .skip:focus { top: .5rem; }
+
+    /* ─── UTILITIES ──────────────────────────────────────── */
+    .container {
+      width: 100%;
+      max-width: var(--max-w);
+      margin-inline: auto;
+      padding-inline: var(--px);
+    }
+
+    .display {
+      font-family: var(--f-display);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.028em;
+      text-wrap: balance;
+    }
+
+    .lead {
+      font-size: clamp(1rem, 1.4vw, 1.125rem);
+      line-height: 1.7;
+      color: var(--ink-2);
+      max-width: 58ch;
+    }
+
+    /* ─── BUTTONS ────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      padding: .875rem 2rem;
+      font-family: var(--f-body);
+      font-size: .9375rem;
+      font-weight: 700;
+      letter-spacing: .01em;
+      text-decoration: none;
+      border: 1px solid transparent;
+      cursor: pointer;
+      border-radius: var(--r);
+      white-space: nowrap;
+      transition: background-color .15s, color .15s, border-color .15s, transform .1s;
+    }
+    .btn:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+    .btn:active { transform: translateY(1px); }
+
+    /* white — for dark backgrounds */
+    .btn-white {
+      background: var(--on-dark);
+      color: var(--dark);
+      border-color: transparent;
+    }
+    .btn-white:hover { background: var(--surface); }
+
+    /* ghost — for dark backgrounds */
+    .btn-ghost {
+      background: transparent;
+      color: var(--on-dark-2);
+      border-color: var(--dark-subtle);
+    }
+    .btn-ghost:hover { color: var(--on-dark); border-color: oklch(0.40 0.012 262); }
+
+    /* filled dark — for light backgrounds */
+    .btn-ink {
+      background: var(--ink);
+      color: var(--surface);
+      border-color: transparent;
+    }
+    .btn-ink:hover { background: oklch(0.22 0.015 262); }
+
+    /* ─── NAVIGATION ─────────────────────────────────────── */
+    .site-header {
+      position: fixed;
+      inset-block-start: 0;
+      inset-inline: 0;
+      height: var(--nav-h);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      transition: background-color .25s, border-color .25s;
+    }
+    .site-header.scrolled {
+      background: var(--surface);
+      border-bottom-color: var(--border);
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: var(--max-w);
+      margin-inline: auto;
+      padding-inline: var(--px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .site-logo {
+      font-family: var(--f-display);
+      font-size: 1.0625rem;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      text-decoration: none;
+      color: var(--on-dark);
+      transition: color .25s;
+      flex-shrink: 0;
+    }
+    .site-header.scrolled .site-logo { color: var(--ink); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.25rem;
+    }
+    .nav-links a {
+      font-size: .9375rem;
+      font-weight: 400;
+      text-decoration: none;
+      color: var(--on-dark-2);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--on-dark); }
+    .site-header.scrolled .nav-links a { color: var(--ink-2); }
+    .site-header.scrolled .nav-links a:hover { color: var(--ink); }
+
+    .nav-cta {
+      font-size: .875rem;
+      font-weight: 700;
+      text-decoration: none;
+      padding: .5rem 1.375rem;
+      border: 1px solid var(--dark-subtle);
+      color: var(--on-dark-2);
+      border-radius: var(--r);
+      transition: color .15s, border-color .15s, background .15s;
+    }
+    .nav-cta:hover { color: var(--on-dark); border-color: oklch(0.40 0.012 262); }
+    .nav-cta:focus-visible { outline: 2px solid var(--on-dark); outline-offset: 3px; }
+    .site-header.scrolled .nav-cta {
+      border-color: var(--border);
+      color: var(--ink-2);
+    }
+    .site-header.scrolled .nav-cta:hover {
+      color: var(--ink);
+      background: var(--surface-alt);
+      border-color: oklch(0.78 0.007 262);
+    }
+
+    /* hamburger */
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: .375rem;
+      color: var(--on-dark);
+      transition: color .25s;
+      border-radius: var(--r);
+    }
+    .menu-btn:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+    .site-header.scrolled .menu-btn { color: var(--ink); }
+
+    /* mobile drawer */
+    .mobile-drawer {
+      display: none;
+      position: fixed;
+      inset-block-start: var(--nav-h);
+      inset-inline: 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      z-index: 199;
+      padding: 1rem var(--px) 1.5rem;
+    }
+    .mobile-drawer.open { display: block; }
+    .mobile-drawer ul { display: flex; flex-direction: column; }
+    .mobile-drawer li { border-bottom: 1px solid var(--border-subtle); }
+    .mobile-drawer li:first-child { border-top: 1px solid var(--border-subtle); }
+    .mobile-drawer a {
+      display: block;
+      padding: .875rem 0;
+      font-size: 1rem;
+      text-decoration: none;
+      color: var(--ink-2);
+      transition: color .15s;
+    }
+    .mobile-drawer a:hover { color: var(--ink); }
+    .mobile-drawer .drawer-cta {
+      display: block;
+      margin-top: 1.25rem;
+      padding: .875rem;
+      background: var(--ink);
+      color: var(--surface);
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+      border-radius: var(--r);
+    }
+
+    /* ─── HERO ───────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: var(--dark);
+      display: grid;
+      grid-template-rows: 1fr auto;
+      padding-top: var(--nav-h);
+    }
+
+    .hero-body {
+      display: flex;
+      align-items: flex-end;
+      padding-block: clamp(4rem, 9vw, 8rem);
+    }
+
+    .hero-inner {
+      width: 100%;
+      max-width: var(--max-w);
+      margin-inline: auto;
+      padding-inline: var(--px);
+    }
+
+    .hero-label {
+      font-size: .75rem;
+      font-weight: 400;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--on-dark-2);
+      margin-bottom: 2rem;
+    }
+
+    .hero h1 {
+      font-family: var(--f-display);
+      font-size: clamp(2.75rem, 6.5vw, 5.75rem);
+      font-weight: 600;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      color: var(--on-dark);
+      max-width: 13ch;
+      text-wrap: balance;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 1.4vw, 1.125rem);
+      color: var(--on-dark-2);
+      max-width: 50ch;
+      line-height: 1.7;
+      margin-bottom: 2.75rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* bottom strip */
+    .hero-strip {
+      border-top: 1px solid var(--dark-border);
+    }
+
+    .hero-strip-inner {
+      width: 100%;
+      max-width: var(--max-w);
+      margin-inline: auto;
+      padding-inline: var(--px);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .strip-item {
+      padding: 1.75rem 0;
+    }
+    .strip-item + .strip-item {
+      padding-left: clamp(1.5rem, 3vw, 2.5rem);
+      border-left: 1px solid var(--dark-border);
+    }
+
+    .strip-num {
+      font-family: var(--f-display);
+      font-size: clamp(1.625rem, 3vw, 2.375rem);
+      font-weight: 300;
+      letter-spacing: -0.04em;
+      color: var(--on-dark);
+      line-height: 1;
+      margin-bottom: .3rem;
+    }
+
+    .strip-lbl {
+      font-size: .8125rem;
+      color: var(--on-dark-2);
+      font-weight: 400;
+      line-height: 1.45;
+    }
+
+    /* ─── SECTION SHELL ──────────────────────────────────── */
+    .section {
+      padding-block: var(--section-y);
+    }
+    .section--alt { background: var(--surface-alt); }
+    .section--dark { background: var(--dark); }
+
+    .section-hd {
+      margin-bottom: clamp(3rem, 5vw, 5rem);
+    }
+
+    .section-hd h2 {
+      font-size: clamp(1.875rem, 3.5vw, 3rem);
+      margin-bottom: .875rem;
+    }
+
+    /* ─── SERVICES ───────────────────────────────────────── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .svc {
+      padding: clamp(2rem, 3.5vw, 3rem);
+      border-top: 1px solid var(--border);
+    }
+    .svc:nth-child(odd) { border-right: 1px solid var(--border); }
+
+    .svc-icon {
+      width: 1.75rem;
+      height: 1.75rem;
+      color: var(--ink-3);
+      margin-bottom: 1.25rem;
+    }
+
+    .svc h3 {
+      font-family: var(--f-display);
+      font-size: clamp(1.125rem, 1.5vw, 1.375rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: .625rem;
+    }
+
+    .svc p {
+      font-size: .9375rem;
+      color: var(--ink-2);
+      line-height: 1.65;
+      max-width: 42ch;
+    }
+
+    .svc-tags {
+      margin-top: 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .375rem;
+    }
+
+    .tag {
+      font-size: .6875rem;
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      padding: .25rem .625rem;
+      background: var(--surface-alt);
+      color: oklch(0.48 0.007 262);
+      border-radius: var(--r);
+    }
+
+    /* ─── ABOUT ──────────────────────────────────────────── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 7vw, 7rem);
+      align-items: start;
+    }
+
+    .about-text h2 {
+      font-size: clamp(1.875rem, 3vw, 2.625rem);
+      margin-bottom: 1.5rem;
+    }
+
+    .about-text p {
+      font-size: .9375rem;
+      color: var(--ink-2);
+      line-height: 1.8;
+      max-width: 52ch;
+    }
+    .about-text p + p { margin-top: 1.125rem; }
+
+    .about-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .stat {
+      padding: 1.75rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-n {
+      font-family: var(--f-display);
+      font-size: clamp(2.25rem, 4vw, 3.25rem);
+      font-weight: 300;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: .4rem;
+    }
+
+    .stat-lbl {
+      font-size: .875rem;
+      color: var(--ink-2);
+      line-height: 1.45;
+    }
+
+    /* ─── PROCESS ────────────────────────────────────────── */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .step {
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+      padding-top: 0;
+      border-left: 1px solid var(--border);
+    }
+    .step:first-child { padding-left: 0; border-left: none; }
+
+    .step-num {
+      font-family: var(--f-display);
+      font-size: .75rem;
+      font-weight: 300;
+      letter-spacing: .06em;
+      color: oklch(0.50 0.007 262);
+      margin-bottom: 1.25rem;
+    }
+
+    .step h3 {
+      font-family: var(--f-display);
+      font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: .625rem;
+    }
+
+    .step p {
+      font-size: .9375rem;
+      color: var(--ink-2);
+      line-height: 1.65;
+    }
+
+    /* ─── CONTACT ────────────────────────────────────────── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: clamp(3rem, 7vw, 8rem);
+      align-items: start;
+    }
+
+    .contact-info h2 {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      color: var(--on-dark);
+      margin-bottom: 1.25rem;
+    }
+
+    .contact-info > p {
+      font-size: .9375rem;
+      color: var(--on-dark-2);
+      line-height: 1.7;
+      max-width: 38ch;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-dl {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .contact-dl dt {
+      font-size: .6875rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--on-dark-2);
+      margin-bottom: .2rem;
+    }
+
+    .contact-dl dd {
+      font-size: .9375rem;
+      color: var(--on-dark);
+      line-height: 1.5;
+    }
+
+    .contact-dl a {
+      color: var(--on-dark);
+      text-decoration: none;
+    }
+    .contact-dl a:hover { text-decoration: underline; }
+
+    /* form */
+    .cform {
+      display: flex;
+      flex-direction: column;
+      gap: .875rem;
+    }
+
+    .frow {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .875rem;
+    }
+
+    .fgroup {
+      display: flex;
+      flex-direction: column;
+      gap: .35rem;
+    }
+
+    .fgroup label {
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--on-dark-2);
+    }
+
+    .fgroup input,
+    .fgroup textarea,
+    .fgroup select {
+      width: 100%;
+      padding: .8125rem 1rem;
+      background: var(--dark-raised);
+      border: 1px solid var(--dark-border);
+      border-radius: var(--r);
+      color: var(--on-dark);
+      font-family: var(--f-body);
+      font-size: .9375rem;
+      line-height: 1.5;
+      transition: border-color .15s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .fgroup input::placeholder,
+    .fgroup textarea::placeholder {
+      color: oklch(0.58 0.010 262);
+    }
+    .fgroup input:focus,
+    .fgroup textarea:focus,
+    .fgroup select:focus {
+      outline: none;
+      border-color: oklch(0.46 0.010 262);
+    }
+    .fgroup input.err,
+    .fgroup textarea.err { border-color: oklch(0.55 0.14 20); }
+
+    .fgroup textarea { resize: vertical; min-height: 110px; }
+
+    .fgroup select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23aaaaaa' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right .875rem center;
+      padding-right: 2.5rem;
+    }
+    /* keep arrow in dark context */
+    .fgroup select option { background: #1a1b25; color: #e0e0e8; }
+
+    .form-submit-btn {
+      width: 100%;
+      margin-top: .25rem;
+    }
+
+    .form-legal {
+      font-size: .75rem;
+      color: oklch(0.60 0.010 262);
+      line-height: 1.55;
+      margin-top: .25rem;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────────── */
+    footer {
+      background: oklch(0.07 0.010 262);
+      border-top: 1px solid oklch(0.15 0.012 262);
+      padding-block: 2.25rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+    }
+
+    .footer-logo {
+      font-family: var(--f-display);
+      font-size: .9375rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--on-dark);
+      text-decoration: none;
+    }
+
+    .footer-copy {
+      font-size: .75rem;
+      color: oklch(0.62 0.008 262);
+      text-align: right;
+    }
+    .footer-copy a {
+      color: oklch(0.72 0.008 262);
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .footer-copy a:hover { color: oklch(0.84 0.008 262); }
+
+    /* ─── SCROLL ANIMATIONS ──────────────────────────────── */
+    @media (prefers-reduced-motion: no-preference) {
+      .a-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity .6s ease, transform .6s ease;
+      }
+      .a-in.vis { opacity: 1; transform: none; }
+      .a-in[data-d="1"] { transition-delay: .1s; }
+      .a-in[data-d="2"] { transition-delay: .2s; }
+      .a-in[data-d="3"] { transition-delay: .3s; }
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 860px) {
+      .about-grid { grid-template-columns: 1fr; }
+
+      .about-stats {
+        flex-direction: row;
+        gap: 0;
+      }
+      .stat { flex: 1; padding: 1.5rem 0; }
+      .stat + .stat {
+        padding-left: clamp(1.25rem, 3vw, 2rem);
+        border-left: 1px solid var(--border);
+        border-top: none;
+      }
+      .stat:first-child { border-top: 1px solid var(--border); }
+    }
+
+    @media (max-width: 720px) {
+      .nav-links, .nav-cta { display: none; }
+      .menu-btn { display: flex; }
+
+      .services-grid { grid-template-columns: 1fr; }
+      .svc:nth-child(odd) { border-right: none; }
+
+      .process-grid { grid-template-columns: 1fr; gap: 0; }
+      .step {
+        padding: 2rem 0;
+        padding-left: 0;
+        border-left: none;
+        border-top: 1px solid var(--border);
+      }
+      .step:first-child { border-top: none; }
+
+      .contact-grid { grid-template-columns: 1fr; }
+      .frow { grid-template-columns: 1fr; }
+
+      .about-stats { flex-direction: column; }
+      .stat + .stat { padding-left: 0; border-left: none; }
+
+      .hero-strip-inner { grid-template-columns: 1fr; }
+      .strip-item + .strip-item {
+        padding-left: 0;
+        border-left: none;
+        border-top: 1px solid var(--dark-border);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-actions { flex-direction: column; }
+      .hero-actions .btn { width: 100%; }
+      .footer-copy { text-align: left; }
+    }
+  </style>
+</head>
+
+<body>
+  <a href="#main" class="skip">Saltar al contenido principal</a>
+
+  <!-- ═══ NAVIGATION ═══════════════════════════════════════ -->
+  <header class="site-header" id="hdr" role="banner">
+    <nav class="nav-inner" aria-label="Navegación principal">
+      <a href="#" class="site-logo" aria-label="Gestoría Martínez — Inicio">Gestoría Martínez</a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#proceso">Proceso</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+
+      <a href="#contacto" class="nav-cta">Solicitar cita</a>
+
+      <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="drawer">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </nav>
+  </header>
+
+  <nav class="mobile-drawer" id="drawer" aria-label="Menú móvil" hidden>
+    <ul role="list">
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#proceso">Proceso</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <a href="#contacto" class="drawer-cta">Solicitar cita</a>
+  </nav>
+
+  <main id="main">
+
+    <!-- ═══ HERO ══════════════════════════════════════════ -->
+    <section class="hero" aria-labelledby="h1">
+      <div class="hero-body">
+        <div class="hero-inner">
+          <p class="hero-label a-in">Asesoría fiscal · laboral · contable</p>
+          <h1 id="h1" class="a-in" data-d="1">
+            Tramitamos<br>lo complejo.<br>Usted vive<br>tranquilo.
+          </h1>
+          <p class="hero-sub a-in" data-d="2">
+            Gestoría Martínez — asesoría profesional para particulares, autónomos y empresas.
+            Décadas de experiencia gestionando sus obligaciones fiscales, laborales y contables.
+          </p>
+          <div class="hero-actions a-in" data-d="3">
+            <a href="#contacto" class="btn btn-white">Solicitar consulta gratuita</a>
+            <a href="#servicios" class="btn btn-ghost">Ver servicios</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-strip">
+        <div class="hero-strip-inner" role="list" aria-label="Datos de la gestoría">
+          <div class="strip-item" role="listitem">
+            <div class="strip-num">+25</div>
+            <div class="strip-lbl">Años de experiencia</div>
+          </div>
+          <div class="strip-item" role="listitem">
+            <div class="strip-num">+500</div>
+            <div class="strip-lbl">Clientes activos</div>
+          </div>
+          <div class="strip-item" role="listitem">
+            <div class="strip-num">24h</div>
+            <div class="strip-lbl">Tiempo de respuesta</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ SERVICES ══════════════════════════════════════ -->
+    <section id="servicios" class="section" aria-labelledby="svc-hd">
+      <div class="container">
+        <div class="section-hd a-in">
+          <h2 id="svc-hd" class="display">Lo que gestionamos</h2>
+          <p class="lead">Cuatro áreas de asesoría para que ningún trámite quede sin resolver.</p>
+        </div>
+
+        <div class="services-grid">
+          <div class="svc a-in" data-d="1">
+            <svg class="svc-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="6" y="4" width="20" height="24" rx="1"/>
+              <line x1="11" y1="10" x2="21" y2="10"/>
+              <line x1="11" y1="15" x2="21" y2="15"/>
+              <line x1="11" y1="20" x2="16" y2="20"/>
+            </svg>
+            <h3>Asesoría Fiscal</h3>
+            <p>Planificación y presentación de impuestos para particulares y empresas. Maximizamos su ahorro fiscal dentro de la legalidad vigente.</p>
+            <div class="svc-tags" aria-label="Servicios incluidos">
+              <span class="tag">IRPF</span>
+              <span class="tag">IVA</span>
+              <span class="tag">Sociedades</span>
+              <span class="tag">Declaraciones trimestrales</span>
+            </div>
+          </div>
+
+          <div class="svc a-in" data-d="2">
+            <svg class="svc-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="16" cy="10" r="4.5"/>
+              <path d="M6 27c0-5.523 4.477-10 10-10s10 4.477 10 10"/>
+              <line x1="23" y1="21" x2="27" y2="21"/>
+              <line x1="25" y1="19" x2="25" y2="23"/>
+            </svg>
+            <h3>Asesoría Laboral</h3>
+            <p>Gestión integral de nóminas, contratos y relaciones laborales. Cumplimiento normativo y representación ante la Inspección de Trabajo.</p>
+            <div class="svc-tags" aria-label="Servicios incluidos">
+              <span class="tag">Nóminas</span>
+              <span class="tag">Contratos</span>
+              <span class="tag">Seguridad Social</span>
+              <span class="tag">Despidos</span>
+            </div>
+          </div>
+
+          <div class="svc a-in" data-d="1">
+            <svg class="svc-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 28h24"/>
+              <path d="M8 21v7M13 16v12M19 11v17M25 5v23"/>
+            </svg>
+            <h3>Asesoría Contable</h3>
+            <p>Llevanza de la contabilidad, cuentas anuales y libros oficiales. Información financiera clara y siempre al día para la toma de decisiones.</p>
+            <div class="svc-tags" aria-label="Servicios incluidos">
+              <span class="tag">Contabilidad</span>
+              <span class="tag">Cuentas anuales</span>
+              <span class="tag">Libros oficiales</span>
+              <span class="tag">Balances</span>
+            </div>
+          </div>
+
+          <div class="svc a-in" data-d="2">
+            <svg class="svc-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="16" width="26" height="12" rx="1"/>
+              <path d="M10 16v-4a6 6 0 0112 0v4"/>
+              <circle cx="16" cy="22" r="2"/>
+            </svg>
+            <h3>Constitución de Empresas</h3>
+            <p>Acompañamiento completo en la creación de su empresa: elección de forma jurídica, trámites notariales y alta ante organismos oficiales.</p>
+            <div class="svc-tags" aria-label="Servicios incluidos">
+              <span class="tag">Sociedad Limitada</span>
+              <span class="tag">Autónomos</span>
+              <span class="tag">Notaría</span>
+              <span class="tag">Registro Mercantil</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ ABOUT ════════════════════════════════════════ -->
+    <section id="nosotros" class="section section--alt" aria-labelledby="about-hd">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-text a-in">
+            <h2 id="about-hd" class="display">Décadas resolviendo lo que otros complican</h2>
+            <p>Gestoría Martínez es una asesoría familiar con más de 25 años de historia. Lo que empezó como un despacho de proximidad sigue siendo exactamente eso: profesionales que conocen a sus clientes por su nombre y que entienden su situación particular.</p>
+            <p>Nuestro equipo de asesores colegiados se forma de manera continua para mantenerse al día de una normativa que cambia cada año. Cuando usted tiene un problema, nosotros ya lo hemos resuelto antes.</p>
+            <p>Trabajamos con particulares, autónomos y pequeñas y medianas empresas. Cada cliente recibe atención directa, sin intermediarios.</p>
+          </div>
+
+          <div class="about-stats a-in" data-d="1" aria-label="Datos de la gestoría">
+            <div class="stat">
+              <div class="stat-n">+25</div>
+              <div class="stat-lbl">Años de experiencia en asesoría fiscal, laboral y contable</div>
+            </div>
+            <div class="stat">
+              <div class="stat-n">+500</div>
+              <div class="stat-lbl">Clientes activos que confían en nosotros cada año</div>
+            </div>
+            <div class="stat">
+              <div class="stat-n">24h</div>
+              <div class="stat-lbl">Tiempo máximo de respuesta a cualquier consulta</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ PROCESS ════════════════════════════════════════ -->
+    <section id="proceso" class="section" aria-labelledby="proc-hd">
+      <div class="container">
+        <div class="section-hd a-in">
+          <h2 id="proc-hd" class="display">Así de sencillo</h2>
+          <p class="lead">De la primera consulta a la gestión completa en tres pasos.</p>
+        </div>
+
+        <div class="process-grid">
+          <div class="step a-in" data-d="1">
+            <div class="step-num">01</div>
+            <h3>Contacta con nosotros</h3>
+            <p>Llame, escriba o rellene el formulario. Le atenderemos en menos de 24 horas y fijaremos una primera consulta gratuita sin compromiso.</p>
+          </div>
+          <div class="step a-in" data-d="2">
+            <div class="step-num">02</div>
+            <h3>Analizamos su situación</h3>
+            <p>Estudiamos su caso en detalle. Le explicamos qué hay que hacer, cuándo y cuánto cuesta, con total transparencia y sin letra pequeña.</p>
+          </div>
+          <div class="step a-in" data-d="3">
+            <div class="step-num">03</div>
+            <h3>Lo gestionamos todo</h3>
+            <p>Nos encargamos de los trámites de principio a fin. Usted no tiene que preocuparse por plazos ni documentación: nosotros hacemos el seguimiento.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ CONTACT ════════════════════════════════════════ -->
+    <section id="contacto" class="section section--dark" aria-labelledby="contact-hd">
+      <div class="container">
+        <div class="contact-grid">
+
+          <div class="contact-info a-in">
+            <h2 id="contact-hd" class="display">Hablemos</h2>
+            <p>Primera consulta gratuita y sin compromiso. Cuéntenos su situación y le decimos exactamente lo que necesita.</p>
+            <dl class="contact-dl">
+              <div>
+                <dt>Teléfono</dt>
+                <dd><a href="tel:+34912345678">+34 912 345 678</a></dd>
+              </div>
+              <div>
+                <dt>Correo electrónico</dt>
+                <dd><a href="mailto:info@gestoriamartinez.es">info@gestoriamartinez.es</a></dd>
+              </div>
+              <div>
+                <dt>Horario de atención</dt>
+                <dd>Lunes a viernes, 9:00 – 18:00</dd>
+              </div>
+              <div>
+                <dt>Dirección</dt>
+                <dd>Calle Mayor, 42<br>28013 Madrid</dd>
+              </div>
+            </dl>
+          </div>
+
+          <form class="cform a-in" data-d="1" id="cform" novalidate aria-label="Formulario de contacto">
+            <div class="frow">
+              <div class="fgroup">
+                <label for="f-nombre">Nombre <span aria-hidden="true">*</span></label>
+                <input type="text" id="f-nombre" name="nombre" placeholder="Su nombre" required autocomplete="given-name" />
+              </div>
+              <div class="fgroup">
+                <label for="f-apellidos">Apellidos <span aria-hidden="true">*</span></label>
+                <input type="text" id="f-apellidos" name="apellidos" placeholder="Sus apellidos" required autocomplete="family-name" />
+              </div>
+            </div>
+            <div class="frow">
+              <div class="fgroup">
+                <label for="f-email">Correo electrónico <span aria-hidden="true">*</span></label>
+                <input type="email" id="f-email" name="email" placeholder="correo@ejemplo.es" required autocomplete="email" />
+              </div>
+              <div class="fgroup">
+                <label for="f-tel">Teléfono</label>
+                <input type="tel" id="f-tel" name="telefono" placeholder="+34 600 000 000" autocomplete="tel" />
+              </div>
+            </div>
+            <div class="fgroup">
+              <label for="f-servicio">Tipo de consulta</label>
+              <select id="f-servicio" name="servicio">
+                <option value="">Seleccione un servicio</option>
+                <option value="fiscal">Asesoría Fiscal</option>
+                <option value="laboral">Asesoría Laboral</option>
+                <option value="contable">Asesoría Contable</option>
+                <option value="empresa">Constitución de Empresa</option>
+                <option value="otro">Otra consulta</option>
+              </select>
+            </div>
+            <div class="fgroup">
+              <label for="f-msg">Mensaje <span aria-hidden="true">*</span></label>
+              <textarea id="f-msg" name="mensaje" placeholder="Cuéntenos brevemente su situación o consulta..." required rows="4"></textarea>
+            </div>
+            <div>
+              <button type="submit" class="btn btn-white form-submit-btn">Enviar consulta</button>
+            </div>
+            <p class="form-legal">
+              Sus datos se tratarán con total confidencialidad conforme al RGPD.
+              No compartimos su información con terceros.
+            </p>
+          </form>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══ FOOTER ════════════════════════════════════════ -->
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <a href="#" class="footer-logo" aria-label="Gestoría Martínez — Inicio">Gestoría Martínez</a>
+        <p class="footer-copy">
+          &copy; 2026 Gestoría Martínez &nbsp;·&nbsp;
+          <a href="#">Aviso legal</a> &nbsp;·&nbsp;
+          <a href="#">Privacidad</a> &nbsp;·&nbsp;
+          <a href="#">Cookies</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ─ Nav scroll state ─────────────────────────────────
+    const hdr = document.getElementById('hdr');
+    function syncNav() {
+      hdr.classList.toggle('scrolled', window.scrollY > 55);
+    }
+    syncNav();
+    window.addEventListener('scroll', syncNav, { passive: true });
+
+    // ─ Mobile menu ──────────────────────────────────────
+    const menuBtn = document.getElementById('menuBtn');
+    const drawer  = document.getElementById('drawer');
+    let open = false;
+
+    function setMenu(state) {
+      open = state;
+      menuBtn.setAttribute('aria-expanded', open);
+      menuBtn.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+      menuBtn.innerHTML = open
+        ? `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`
+        : `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>`;
+      if (open) {
+        drawer.removeAttribute('hidden');
+        drawer.classList.add('open');
+      } else {
+        drawer.setAttribute('hidden', '');
+        drawer.classList.remove('open');
+      }
+    }
+
+    menuBtn.addEventListener('click', () => setMenu(!open));
+    drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+
+    // ─ Scroll animations ────────────────────────────────
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' });
+      document.querySelectorAll('.a-in').forEach(el => io.observe(el));
+    } else {
+      document.querySelectorAll('.a-in').forEach(el => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      });
+    }
+
+    // ─ Contact form ─────────────────────────────────────
+    const form = document.getElementById('cform');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const required = form.querySelectorAll('[required]');
+      let ok = true;
+      required.forEach(f => {
+        const err = !f.value.trim() || (f.type === 'email' && !f.value.includes('@'));
+        f.classList.toggle('err', err);
+        if (err) ok = false;
+      });
+      if (!ok) {
+        const first = form.querySelector('.err');
+        if (first) first.focus();
+        return;
+      }
+      const btn = form.querySelector('[type=submit]');
+      btn.textContent = 'Enviando…';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = '¡Consulta enviada!';
+        form.reset();
+        setTimeout(() => { btn.textContent = 'Enviar consulta'; btn.disabled = false; }, 3500);
+      }, 1400);
+    });
+
+    // clear error on input
+    form.querySelectorAll('input, textarea').forEach(f => {
+      f.addEventListener('input', () => f.classList.remove('err'));
+    });
+  </script>
+</body>
+</html>
